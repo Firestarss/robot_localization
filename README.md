@@ -8,7 +8,7 @@ The goal of this project was, given a limited set of data, estimate the location
 
 We took the approach discussed in class to solve this problem (i.e. laying out a field of particles with varying positions and orientations around an initial pose to establish which one had the highest probability of being the robot). The first stage of which as illustrated in figure 1 is laying out the initial particle field. 
 
-| ![space-1.jpg](https://blog-assets.thedyrt.com/uploads/2019/01/shutterstock_1033306540-1.jpg) |
+| ![space-1.jpg](assets/roboplan.png) |
 |:--:|
 | <b>Figure 1. Placing Initial Particle Cloud Around an Initial Pose.</b>|
  
@@ -16,7 +16,7 @@ Our code relies on the user providing an initial position and orientation they b
  
 Once this was completed, we had to treat each point as if it was the Neato and examine how its position and orientation would match the lidar data we are constantly receiving from the Neato. However, this raises the fundamental question that if we do not know where the Neato is, how can we possibly evaluate the particles? Well, we know the 360 distance values we received from the Lidar are distances until the laser hit an obstacle. Therefore, we can take these distances and their angles and fit them as if they are emanating from each particle as presented in Figure 2.
 
-| ![space-1.jpg](https://blog-assets.thedyrt.com/uploads/2019/01/shutterstock_1033306540-1.jpg) |
+| ![space-1.jpg](assets/roboplan%20(1).png) |
 |:--:|
 | <b>Figure 2. Lidar Scans in Green Fitted to Particles</b>|
  
@@ -24,7 +24,7 @@ Now, if the particle is exactly aligned with the Neato and if we draw the lidar 
  
 This brings us to the step where we evaluate the weight of every particle based on these distances with a total distance to obstacles per point closer to zero meaning a higher weight. We chose to take the weighted mean of every particle after they had been normalized to 1, so we multiplied the position and orientations by their weight and then took the overall average. An example of how this would look is shown in Figure 3.
 
-| ![space-1.jpg](https://blog-assets.thedyrt.com/uploads/2019/01/shutterstock_1033306540-1.jpg) |
+| ![space-1.jpg](assets/Localization%20Plan%20(1).png) |
 |:--:|
 | <b>Figure 3. Weighting the Likelihood That Each Particle is the Neato</b>|
  
@@ -32,7 +32,7 @@ A weighted average approach was taken mainly because it made sense given the fac
  
 All that is left at this point is to resample our particles after the Neato has moved. To do this we examined the odometry frame of the Neato and the relative change in angle and distance before extrapolating this to every particle. This process is illustrated in Figure 4.
 
-| ![space-1.jpg](https://blog-assets.thedyrt.com/uploads/2019/01/shutterstock_1033306540-1.jpg) |
+| ![space-1.jpg](assets/roboplan%20(2).png) |
 |:--:|
 | <b>Figure 4. Transformation of Particle Based on Odometry Information</b>|
  
